@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 9 mars 2016 21:41:43 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="fr.GalileeGFormation.entites.Cours" table="cours" catalog="formation_db" optimistic-lock="version">
+        <id name="coursId" type="java.lang.Integer">
+            <column name="coursId" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="users" class="fr.GalileeGFormation.entites.Users" fetch="select">
+            <column name="username" length="45" not-null="true" />
+        </many-to-one>
+        <property name="libelle" type="string">
+            <column name="libelle" length="150" />
+        </property>
+        <property name="abreviation" type="string">
+            <column name="abreviation" length="20" />
+        </property>
+        <property name="description" type="string">
+            <column name="description" length="16777215" />
+        </property>
+        <property name="document" type="binary">
+            <column name="document" />
+        </property>
+        <set name="formations" table="formation_cours" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="coursId" not-null="true" />
+            </key>
+            <many-to-many entity-name="fr.GalileeGFormation.entites.Formation">
+                <column name="formationId" not-null="true" />
+            </many-to-many>
+        </set>
+    </class>
+</hibernate-mapping>
