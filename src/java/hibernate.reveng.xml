@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd">
+<hibernate-reverse-engineering>
+  <schema-selection match-catalog="formation_db"/>
+  <table-filter match-name="role"/>
+  <table-filter match-name="secretariat"/>
+  <table-filter match-name="formation"/>
+  <table-filter match-name="universite"/>
+  <table-filter match-name="universites_composante"/>
+  <table-filter match-name="users"/>
+  <table-filter match-name="superformation_formation"/>
+  <table-filter match-name="composante_departement"/>
+  <table-filter match-name="composante"/>
+  <table-filter match-name="departement_superformation"/>
+  <table-filter match-name="formation_cours"/>
+  <table-filter match-name="departement"/>
+  <table-filter match-name="super_formation"/>
+  <table-filter match-name="cours"/>
+</hibernate-reverse-engineering>
