@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"  
+      xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:o="http://omnifaces.org/ui"
+      xmlns:of="http://omnifaces.org/functions">
+
+    <h:head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <title>Ajouter une super formation</title>
+
+        <!-- Bootstrap -->
+        <link href="resources/css/bootstrap.min.css" rel="stylesheet"/>
+
+        <!-- CSS Custom -->
+        <link href="resources/css/custom.css" rel="stylesheet"/>
+
+        <!-- fonts -->
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'/>
+        <link rel="stylesheet" href="resources/font-awesome-4.0.3/css/font-awesome.min.css"/>
+
+        <!-- CSS STYLE-->
+        <link rel="stylesheet" type="text/css" href="resources/css/style.css" media="screen" />
+
+        <!-- SLIDER REVOLUTION 4.x CSS SETTINGS -->
+        <link rel="stylesheet" type="text/css" href="resources/rs-plugin/css/settings.css" media="screen" />
+
+        <!-- MENU -->
+        <link rel="stylesheet" href="resources/css/style.css"/>
+
+        <style type="text/css">
+            .datalist-noborder .ui-widget-content {
+                border: none;
+                border-style: none;
+                background: none ;
+            }
+        </style>
+
+    </h:head>
+
+    <h:body>
+        <p:growl id="growl" showDetail="true" sticky="true" autoUpdate="true"/>  
+
+        <!-- MENU -->
+        <nav id="nav">
+            <ul id="navigation">
+                <li><a href="index.jsf" class="first">Home</a></li>
+                <li><a href="#">Galilée Gestion &raquo;</a>
+                    <ul>
+
+                        <li><a href="nvUniversite.jsf">Ajouter université</a></li>
+                        <li><a href="nvComposante.jsf">Composante</a></li>
+                        <li><a href="nvDepartement.jsf">Departement </a></li>
+                        <li><a href="#">Gestion entités &raquo;</a>
+                            <ul>
+                                <li><a href="univList.jsf">Listes</a></li>
+                            </ul>                 
+                        </li>                 
+                    </ul>
+                </li>
+                <li><a href="#">Formations &raquo;</a>
+                    <ul>
+                        <li><a href="nvSupFormation.jsf">Super Formation</a></li>
+                        <li><a href="nvFormation.jsf">Formation</a></li>
+                        <li><a href="nvCours.jsf">Cours</a></li>
+                    </ul>             
+                </li>
+                <li><a href="login.jsp">Responsables &raquo;</a>
+                    <ul>
+                        <li><a href="nouveau.jsf">Nouveau</a></li>
+                        <li><a href="userList.jsf">Liste</a></li>
+                    </ul>
+                </li>
+                <!--                    <li><a href="test.jsf">login</a></li>-->
+                <li><a href="logout" class="last">Déconnexion</a></li>
+            </ul>
+        </nav>
+        <!-- FIN MENU -->
+
+
+        <div class="container-fluid">
+
+            <!-- Slider -->
+            <div class="tp-banner-container">
+                <div class="tp-banner" >
+                    <!-- LAYERS -->                    
+                    <h:form id="rechercher"  class="form" >                        
+                        <div class="pull-left txt"> <p:inputText styleClass="form-control" placeholder="Rechercher" value="#{universiteBean.rechercherValeur}" required="true"/></div>
+                        <div class="pull-left"> 
+                            <p:commandLink id="ajax"  actionListener="#{universiteBean.rechercher()}" update=":rechercher">
+                                <button class="btn1 btn1-default" type="button" ><i class="fa fa-search"></i></button>
+                            </p:commandLink>                        
+                        </div>
+                        <div class="clearfix"></div>
+                        <b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h:outputLabel id="compter" value="#{fn:length(nvFormationBean.formations)}"></h:outputLabel></b> Formations - <b><h:outputLabel id="compter1" value="#{fn:length(nvUniversiteBean.universites)}"></h:outputLabel></b> Etablissements                        
+                        <br/><br/><br/><br/>
+                        &nbsp;&nbsp;<img src="resources/images/jumelles.png" alt=""  />
+                    </h:form>                    
+                </div>                
+            </div>    
+        </div>    
+        <!-- //Slider -->    
+
+
+        <div class="headernavs">
+            <div class="container">
+                <div class="row">
+                    <h:form>
+                        <div class="col-lg-1 col-xs-3 col-sm-2 col-md-2 logo "><p:commandLink id="ajax"  action="#{universiteBean.init()}" > <a href="index.jsf"><img src="resources/images/refresh1.png" alt="" /></a></p:commandLink></div>
+                    </h:form>
+                    <div class="col-lg-4 search hidden-xs hidden-sm col-md-3">
+                        <div class="wrap">
+
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-xs-12 col-sm-5 col-md-4 avt">
+                        <div class="stnt pull-left">                            
+
+                        </div>
+
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <section class="content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 breadcrumbf">
+                        <a href="#">Création d'une nouvelle super formation</a> 
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-md-8">
+
+                        <!-- POST -->
+                        <div class="post">
+                            <h:form enctype="multipart/form-data" id="addSupFormForum" styleClass="form newtopic"> 
+                                <div class="postinfotop">
+                                    <h2>Créer une nouvelle super formation</h2>
+                                </div>
+
+                                <!-- acc section -->
+                                <div class="accsection">
+                                    <div class="acccap">
+                                        <div class="userinfo pull-left"><h:outputText value="&#160;" /></div>
+                                        <div class="posttext pull-left"><h3>Champs obligatoires</h3></div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="topwrap">
+
+                                        <div class="userinfo pull-left">
+
+                                        </div>
+
+                                        <div class="posttext pull-left">
+                                            <div class="row"><div  class="col-lg-6 col-md-6">
+                                                    <!-- utiliser le convertisseur automatique de omnifaces pour convertir l élement selectionné en string et l afficher dans l input-->
+                                                    <h:selectOneMenu id="selectitemsDsf" value="#{nvSupFormationBean.dep}" converter="omnifaces.SelectItemsConverter">
+                                                        <f:selectItem itemLabel=" Séléctionner un departement " noSelectionOption="true" />
+                                                        <f:selectItems value="#{nvSupFormationBean.selectDep}" />
+                                                        <!-- p:ajax is more powerful/efficient on client side dom manipulation and supports more callbacks in addition to support for ajaxStatus-->
+                                                        <p:ajax update="selected_itemDsf" />
+                                                    </h:selectOneMenu>
+
+                                                    <h:outputText id="selected_itemDsf" value="#{nvSupFormationBean.dep.departementId}"/>
+                                                    <h:outputLabel value="Si le département n'existe pas, Cliquez "><a href="nvDepartement.jsf">ici</a></h:outputLabel>
+                                                </div>
+                                            </div>    
+                                            <div class="row">
+                                                <div class="col-lg-6 col-md-6">
+                                                    <p:inputText placeholder="Libellé" styleClass="form-control1" value="#{nvSupFormationBean.nvSupForm.libelle}" requiredMessage="Vous devez renseigner un nom" required="true"/>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6">
+                                                    <p:inputText placeholder="Abréviation" styleClass="form-control1" value="#{nvSupFormationBean.nvSupForm.abreviation}" required="false"/>
+                                                </div>
+                                            </div>
+                                            <div class="textwraper">
+                                                <div class="postreply">Ajouter une description</div>
+                                                <p:inputTextarea value="#{nvSupFormationBean.nvSupForm.description}" styleClass="form-control1" placeholder="Tapez votre description ici" autoResize="false" required="false"/>
+
+                                            </div>
+                                            <br></br>
+
+                                            <div class="row"><div  class="col-lg-6 col-md-6">
+                                                    <!-- utiliser le convertisseur automatique de omnifaces pour convertir l élement selectionné en string et l afficher dans l input-->
+                                                    <h:selectOneMenu id="selectitemsSsf" value="#{nvSupFormationBean.s}" converter="omnifaces.SelectItemsConverter">
+                                                        <f:selectItem itemLabel=" Séléctionner un secretariat " noSelectionOption="true" />
+                                                        <f:selectItems value="#{nvSupFormationBean.selectSec}" />
+                                                        <!-- p:ajax is more powerful/efficient on client side dom manipulation and supports more callbacks in addition to support for ajaxStatus-->
+                                                        <p:ajax update="selected_itemSsf" />
+                                                    </h:selectOneMenu>
+
+                                                    <h:outputText id="selected_itemSsf" value="#{nvSupFormationBean.s.secretariatId}"/>
+                                                    <h:outputLabel value="Si le secretariat n'existe pas, Cliquez "><a href="nvSecretariat.jsf">ici</a></h:outputLabel>
+                                                </div>
+
+                                                <div  class="col-lg-6 col-md-6">
+                                                    <h:selectOneMenu id="selectitemsRsf" value="#{nvSupFormationBean.us}" converter="omnifaces.SelectItemsConverter">
+                                                        <f:selectItem itemLabel=" Séléctionner un résponsable " noSelectionOption="true" />
+                                                        <f:selectItems value="#{nvSupFormationBean.selectRes}" />
+                                                        <!-- p:ajax is more powerful/efficient on client side dom manipulation and supports more callbacks in addition to support for ajaxStatus-->
+                                                        <p:ajax update="selected_itemRsf" />
+                                                    </h:selectOneMenu>
+
+                                                    <h:outputText id="selected_itemRsf" value="#{nvSupFormationBean.us.username}"/>
+                                                    <h:outputLabel value="Si le responsable n'existe pas, Cliquez "><a href="nouveau.jsf">ici</a></h:outputLabel>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="clearfix"></div>
+
+
+                                    </div>  
+                                </div><!-- acc section END -->
+
+                                <br/><br/>
+
+                                <div class="postinfobot">
+                                    <p:messages autoUpdate="true" showDetail="true"></p:messages>
+                                    <div class="pull-left lblfch">
+                                        <label for="note"> I agree with the Terms and Conditions of this site</label>
+                                    </div>
+
+                                    <div class="pull-right postreply">
+                                        <div class="pull-left"><p:commandButton value="Ajouter" action="#{nvSupFormationBean.onAddPress()}" styleClass="btn btn-primary" update=""/></div>
+                                        <div class="clearfix"></div>
+                                    </div>
+
+                                    <div class="clearfix"></div>
+                                </div>
+                            </h:form>
+                        </div><!-- POST -->
+
+                    </div>
+
+                    <div class="col-lg-4 col-md-4">
+
+                        <!-- -->
+                        <div class="sidebarblock">
+                            <h3>Categories</h3>
+                            <div class="divline"></div>
+                            <div class="blocktxt">
+                                <ul class="cats">
+
+                                    <h:form id="form5"> 
+
+                                        <div class="datalist-noborder">
+                                            <p:dataList  id="lista" var="categorie1" 
+                                                         value="#{NVCompteBean.categories}"   
+                                                         emptyMessage="aucune catégorie trouver" > 
+
+                                                <li><a href="index.jsf?idCat=#{categorie1.idCategory}"><h:outputText value="#{categorie1.name}" />  
+                                                        <span class="badge pull-right">
+                                                            <h:outputText value="#{NVCompteBean.sizeOfList(categorie1.filDiscussions)}" />
+                                                            <h:outputText value="0" rendered="#{empty categorie1.filDiscussions}" />
+                                                        </span>
+                                                    </a></li>
+                                            </p:dataList> 
+                                        </div>
+                                    </h:form>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- -->
+                        <div class="sidebarblock">
+                            <h3>Structures</h3>
+
+                            <h:form>
+                                <div>&nbsp;&nbsp;<p:commandLink id="ajax3"  action="#{universiteBean.init()}" > <a href="index.jsf"><img src="resources/images/institutGalilee.jpg" alt="" /></a></p:commandLink>
+                                    &nbsp;&nbsp;<p:commandLink id="ajax5"  action="#{universiteBean.init()}" > <a href="index.jsf"><img src="resources/images/recherche.jpg" alt="" /></a></p:commandLink></div><br/>
+                                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<p:commandLink id="ajax4"  action="#{universiteBean.init()}" > <a href="index.jsf"><img src="resources/images/formation1.jpg" alt="" /></a></p:commandLink>
+                                </div>
+                                <br/>
+
+                            </h:form>
+                        </div>
+
+                        <!-- SLIDE FIN -->
+                        <div class="sidebarblock">
+                            <div class="blocktxt">
+                                <a href="https://www.univ-paris13.fr/catalogues/">BIBLIOTHEQUE</a>
+                            </div>
+                            <div class="divline"></div>
+                            <div class="blocktxt">
+                                <a href="https://www.univ-paris13.fr/presse/">ESPACE PRESSE</a>
+                            </div>
+                            <div class="divline"></div>
+                            <div class="blocktxt">
+                                <a href="#">AGENDA</a>
+                            </div>
+                            <div class="divline"></div>
+                            <div class="blocktxt">
+                                <a href="#">FORUM</a>
+                            </div>
+                            <div class="divline"></div>
+                            <div class="blocktxt">
+                                <a href="#">VENIR A L'UNIVERSITE</a>
+                            </div>
+                            <div class="divline"></div>
+                            <div class="blocktxt">
+                                <a href="#">ANNUAIRE</a>
+                            </div>
+                        </div>
+                        <!-- FIN SLIDE FIN-->
+
+
+                    </div>
+                </div>
+            </div>
+
+
+        </section>
+
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-1 col-xs-3 col-sm-2 logo "><a href="#"><img src="resources/images/refresh1.jpg" alt=""  /></a></div>
+                    <div class="col-lg-8 col-xs-9 col-sm-5 ">Copyrights 2016, Gestion des formations</div>
+                    <div class="col-lg-3 col-xs-12 col-sm-5 sociconcent">
+                        <ul class="socialicons">
+                            <li><a href="#"><i class="fa fa-facebook-square"></i></a></li>
+                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                            <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                            <li><a href="#"><i class="fa fa-cloud"></i></a></li>
+                            <li><a href="#"><i class="fa fa-rss"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+
+
+        <!-- get jQuery from the google apis -->
+        <script type="text/javascript" src="jquery/jquery.js"></script>
+
+        <!-- SLIDER REVOLUTION 4.x SCRIPTS  -->
+        <script type="text/javascript" src="rs-plugin/js/jquery.themepunch.plugins.min.js"></script>
+        <script type="text/javascript" src="rs-plugin/js/jquery.themepunch.revolution.min.js"></script>
+
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+
+
+        <!-- LOOK THE DOCUMENTATION FOR MORE INFORMATIONS -->
+        <script type="text/javascript">
+
+            var revapi;
+
+            jQuery(document).ready(function () {
+                "use strict";
+                revapi = jQuery('.tp-banner').revolution(
+                        {
+                            delay: 15000,
+                            startwidth: 1200,
+                            startheight: 278,
+                            hideThumbs: 10,
+                            fullWidth: "on"
+                        });
+
+            });	//ready
+
+        </script>
+
+        <!-- END REVOLUTION SLIDER -->       
+
+    </h:body>  
+</html>
+
+
+
+
+

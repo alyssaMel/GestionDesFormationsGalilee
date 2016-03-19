@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"  
+      xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:o="http://omnifaces.org/ui"
+      xmlns:of="http://omnifaces.org/functions">
+    <h:head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <title>Liste des responsables</title>
+
+        <!-- Bootstrap -->
+        <link href="resources/css/bootstrap.min.css" rel="stylesheet"/>
+
+        <!-- CSS Custom -->
+        <link href="resources/css/custom.css" rel="stylesheet"/>
+
+        <!-- fonts -->
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'/>
+        <link rel="stylesheet" href="resources/font-awesome-4.0.3/css/font-awesome.min.css"/>
+
+        <!-- CSS STYLE-->
+        <link rel="stylesheet" type="text/css" href="resources/css/style.css" media="screen" />
+
+        <!-- SLIDER REVOLUTION 4.x CSS SETTINGS -->
+        <link rel="stylesheet" type="text/css" href="resources/rs-plugin/css/settings.css" media="screen" />
+
+        <!-- MENU -->
+        <link rel="stylesheet" href="resources/css/style.css"/>
+
+        <style type="text/css">
+            .datalist-noborder .ui-widget-content {
+                border: none;
+                border-style: none;
+                background: none ;
+            }
+        </style>
+
+
+    </h:head>
+    <h:body>
+        <p:growl id="growl" showDetail="true" sticky="true" autoUpdate="true"/>  
+
+            <!-- MENU -->
+            <nav id="nav">
+                <ul id="navigation">
+                    <li><a href="index.jsf" class="first">Home</a></li>
+                    <li><a href="#">Galilée Gestion &raquo;</a>
+                        <ul>
+                            
+                            <li><a href="nvUniversite.jsf">Ajouter université</a></li>
+                            <li><a href="nvComposante.jsf">Composante</a></li>
+                            <li><a href="nvDepartement.jsf">Departement </a></li>
+                            <li><a href="#">Gestion entités &raquo;</a>
+                                <ul>
+                                    <li><a href="univList.jsf">Listes</a></li>
+<!--                                    <li><a href="#">Brochures</a></li>
+                                    <li><a href="#">Envelopes</a></li>
+                                    <li><a href="#">Flyers</a></li>-->
+                                </ul>                 
+                            </li>                 
+                            
+                        </ul>
+                    </li>
+                    <li><a href="#">Formations &raquo;</a>
+                        <ul>
+                            <li><a href="nvSupFormation.jsf">Super Formation</a></li>
+                            <li><a href="nvFormation.jsf">Formation</a></li>
+                            <li><a href="nvCours.jsf">Cours</a></li>
+                            <li><a href="#">Calligraphy</a></li>
+                            <li><a href="#">Film &raquo;</a>
+                                <ul>
+                                    <li><a href="#">John Carter</a></li>
+                                    <li><a href="#">The Avengers</a></li>
+                                    <li><a href="#">The Amazing SpiderMan</a></li>
+                                    <li><a href="#">Madagascar 3</a></li>
+                                </ul>                     
+                            </li>
+                            
+                        </ul>             
+                    </li>
+                    <li><a href="login.jsp">Responsables &raquo;</a>
+                        <ul>
+                                    <li><a href="nouveau.jsf">Nouveau</a></li>
+                                    <li><a href="userList.jsf">Liste</a></li>
+                                    <li><a href="#">The Avengers</a></li>
+                                    <li><a href="#">The Amazing SpiderMan</a></li>
+                                    <li><a href="#">Madagascar 3</a></li>
+                                </ul>
+                    </li>
+<!--                    <li><a href="test.jsf">login</a></li>-->
+                    <li><a href="logout" class="last">Déconnexion</a></li>
+                </ul>
+            </nav>
+            <!-- FIN MENU -->
+
+        <div class="container-fluid">
+
+            <!-- Slider -->
+            <div class="tp-banner-container">
+                <div class="tp-banner" >
+                    <!-- LAYERS -->                    
+                    <h:form id="rechercher"  class="form" >                        
+                        <div class="pull-left txt"> <p:inputText styleClass="form-control" placeholder="Rechercher" value="#{universiteBean.rechercherValeur}" required="true"/></div>
+                        <div class="pull-left"> 
+                            <p:commandLink id="ajax"  actionListener="#{universiteBean.rechercher()}" update=":formList,rechercher">
+                                <button class="btn1 btn1-default" type="button" ><i class="fa fa-search"></i></button>
+                            </p:commandLink>                        
+                        </div>
+                        <div class="clearfix"></div>
+                        <b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h:outputLabel id="compter" value="#{fn:length(nvFormationBean.formations)}"></h:outputLabel></b> Formations - <b><h:outputLabel id="compter1" value="#{fn:length(nvUniversiteBean.universites)}"></h:outputLabel></b> Etablissements                        
+                        <br/><br/><br/><br/>
+                        &nbsp;&nbsp;<img src="resources/images/jumelles.png" alt=""  />
+                    </h:form>                    
+                </div>                
+            </div>    
+        </div>    
+        <!-- //Slider -->                
+
+
+        <div class="headernavs">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-1 col-xs-3 col-sm-2 col-md-2 logo "><a href="index.jsf"><img src="resources/images/refresh1.jpg" alt="" /></a></div>
+
+                    <div class="col-lg-4 search hidden-xs hidden-sm col-md-3">
+                        <div class="wrap">
+
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-xs-12 col-sm-5 col-md-4 avt">
+                        <div class="stnt pull-left">                            
+
+                        </div>
+
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <section class="content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 breadcrumbf">
+                        <a href="#">Créer une nouvelle université</a> 
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-md-8">
+
+                        <!-- POST -->
+                        <div class="post">
+                            <f:view>
+                            <h:form id="formList" enctype="multipart/form-data" style="width: 750px">
+                                <!--                <p:growl id="msgs" showDetail="true" />-->
+                                <div class="postinfotop">
+                                    <h2>Liste des Responsables</h2>
+                                </div>
+                                <div class="clearfix"></div>
+                                <br/>
+                                <p:dataTable id="universiteTable" var="users" value="#{tousBean.userList}" rowKey="#{users.universites}">
+<!--                                    <p:dataTable id="coursTable" value="#{tousBean.userList}" selectionMode="single" 
+                                                 var="cours" rowKey="cours.courstId" paginator="true" rows="5" paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                                                 rowsPerPageTemplate="5,10,15" lazy="true">-->
+                                    <p:column headerText="Username" id="Username" sortBy="#{users.username}" 
+                                              filterBy="#{users.username}" style="width: 65px;">
+                                        <h:outputText value="#{users.username}"/>
+                                        </p:column>
+
+                                    <p:column headerText="Nom" id="Nom" sortBy="#{users.firstName}" 
+                                              filterBy="#{users.firstName}" style="width: 80px">
+                                        <h:outputText value="#{users.firstName}" />
+                                        </p:column>
+                                    <p:column headerText="Prénom" id="Prénom" sortBy="#{users.lastName}" 
+                                              filterBy="#{users.lastName}" style="width: 80px">
+                                        <h:outputText value="#{users.lastName}"/>
+                                    </p:column>
+                                    <p:column headerText="Télephone" id="Téléphone" sortBy="#{users.telephone}" 
+                                              filterBy="#{users.telephone}" style="width: 65px">
+                                        <h:outputText value="#{users.telephone}"/>
+                                    </p:column>
+                                    <p:column headerText="Email" id="Email" sortBy="#{users.email}" 
+                                              filterBy="#{users.email}" style="width: 90px">
+                                        <h:outputText value="#{users.email}"/>
+                                    </p:column>
+                                    
+                                        <p:column style="width: 35px;text-align: center">
+                                            <p:commandButton value="" update=":formList" icon="ui-icon-trash" action="#{tousBean.onDeleteUs()}" style="width:32px; height:25px; text-align: center" >
+                                                <f:setPropertyActionListener value="#{universite}" target="#{tousBean.universite}"/>
+                                            </p:commandButton>                    
+                                        </p:column>
+                                    </p:dataTable>                                    
+                                  
+
+                            </h:form>
+                            <!-- FIN UNIVERSITE -->
+                            <br/>
+
+                            
+                            </f:view>
+                            <!-- FIN COURS -->
+
+                            
+                        </div><!-- POST -->
+
+
+
+
+
+
+                    </div>
+                    <div class="col-lg-4 col-md-4">
+
+                        <!-- -->
+                        <div class="sidebarblock">
+                            <h3>Categories</h3>
+                            <div class="divline"></div>
+                            <div class="blocktxt">
+                                <ul class="cats">
+
+                                    <h:form id="form5"> 
+
+                                        <div class="datalist-noborder">
+                                            <p:dataList  id="lista" var="categorie1" 
+                                                         value="#{NVCompteBean.categories}"   
+                                                         emptyMessage="aucune catégorie trouver" 
+
+                                                         > 
+
+                                                <li><a href="index.jsf?idCat=#{categorie1.idCategory}"><h:outputText value="#{categorie1.name}" />  
+                                                        <span class="badge pull-right">
+                                                            <h:outputText value="#{NVCompteBean.sizeOfList(categorie1.filDiscussions)}" />
+                                                            <h:outputText value="0" rendered="#{empty categorie1.filDiscussions}" />
+                                                        </span>
+                                                    </a></li>
+
+                                            </p:dataList> 
+                                        </div>
+                                    </h:form>
+
+                                    
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- -->
+                        <div class="sidebarblock">
+                            <h3>Liste des universités</h3>
+                        </div>
+
+                        <!-- -->
+                        <div class="sidebarblock">
+                            <h3>Nouveautés</h3>
+                            <div class="divline"></div>
+                            <div class="blocktxt">
+                                <a href="#">bla bla bla bla bla</a>
+                            </div>
+                            <div class="divline"></div>
+                            <div class="blocktxt">
+                                <a href="#">bla bla bla bla bla</a>
+                            </div>
+                            <div class="divline"></div>
+                            <div class="blocktxt">
+                                <a href="#">bla bla bla bla bla</a>
+                            </div>
+                            <div class="divline"></div>
+                            <div class="blocktxt">
+                                <a href="#">bla bla bla bla bla</a>
+                            </div>
+                            <div class="divline"></div>
+                            <div class="blocktxt">
+                                <a href="#">bla bla bla bla bla</a>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+
+        </section>
+
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-1 col-xs-3 col-sm-2 logo "><a href="#"><img src="resources/images/refresh1.jpg" alt=""  /></a></div>
+                    <div class="col-lg-8 col-xs-9 col-sm-5 ">Copyrights 2015, websitename.com</div>
+                    <div class="col-lg-3 col-xs-12 col-sm-5 sociconcent">
+                        <ul class="socialicons">
+                            <li><a href="#"><i class="fa fa-facebook-square"></i></a></li>
+                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                            <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                            <li><a href="#"><i class="fa fa-cloud"></i></a></li>
+                            <li><a href="#"><i class="fa fa-rss"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+
+
+        <!-- get jQuery from the google apis -->
+        <script type="text/javascript" src="jquery/jquery.js"></script>
+
+        <!-- SLIDER REVOLUTION 4.x SCRIPTS  -->
+        <script type="text/javascript" src="rs-plugin/js/jquery.themepunch.plugins.min.js"></script>
+        <script type="text/javascript" src="rs-plugin/js/jquery.themepunch.revolution.min.js"></script>
+
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+
+
+        <!-- LOOK THE DOCUMENTATION FOR MORE INFORMATIONS -->
+        <script type="text/javascript">
+
+            var revapi;
+
+            jQuery(document).ready(function () {
+                "use strict";
+                revapi = jQuery('.tp-banner').revolution(
+                        {
+                            delay: 15000,
+                            startwidth: 1200,
+                            startheight: 278,
+                            hideThumbs: 10,
+                            fullWidth: "on"
+                        });
+
+            });	//ready
+
+        </script>
+
+        <!-- END REVOLUTION SLIDER -->       
+
+
+
+
+
+    </h:body>
+</html>
