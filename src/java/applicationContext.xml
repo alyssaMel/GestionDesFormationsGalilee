@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+          http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+          http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+          http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+">
+
+    
+    <context:component-scan base-package="fr.GalileeGFormation.entites" />
+    <context:component-scan base-package="fr.GalileeGFormation.dao"/>
+    <context:component-scan base-package="fr.GalileeGFormation.service"/>
+    <!--    <context:component-scan base-package="fr.GalileeGFormation.dao"/>-->
+    <context:component-scan base-package="fr.GalileeGFormation.entites.beans"/>
+    
+    
+    <bean id="dataSource"
+          class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://localhost:3306/formation_db?useSSL=false" />
+        <property name="username" value="root" />
+        <property name="password" value="root" />
+    </bean> 
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+ 
+        <property name="annotatedClasses">
+            <list>
+                <value>fr.GalileeGFormation.entites.Universite</value>
+                <value>fr.GalileeGFormation.entites.Composante</value>
+                <value>fr.GalileeGFormation.entites.Departement</value>
+                <value>fr.GalileeGFormation.entites.SuperFormation</value>
+                <value>fr.GalileeGFormation.entites.Formation</value>
+                <value>fr.GalileeGFormation.entites.Cours</value>
+                <value>fr.GalileeGFormation.entites.Secretariat</value>
+                <value>fr.GalileeGFormation.entites.Role</value>
+                <value>fr.GalileeGFormation.entites.Users</value>
+            </list>
+        </property>
+        
+        <property name="configLocation" >
+            <value>classpath:hibernate.cfg.xml</value>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.c3p0.max_size">25</prop>
+            </props>
+        </property>
+        
+        <!--        <property name="mappingDirectoryLocations" value="fr.GalileeGFormation.entites"/>-->
+        
+        <property name="configurationClass">
+            <value>org.hibernate.cfg.AnnotationConfiguration</value>
+        </property>   
+        
+    </bean> 
+  
+    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>  
+
+    
+    
+    <!--injection des dependance entre les deux couche Services et Dao-->
+    
+    <!-- Universite-->
+    <bean id="universiteDao" class="fr.GalileeGFormation.dao.UniversiteDaoImpl" init-method="init"/>
+    
+    <bean id="universiteMetier" class="fr.GalileeGFormation.service.UniversiteMetierImpl" init-method="init">
+        <property name="universiteDao" ref="universiteDao"/>
+    </bean>
+    
+    <!-- Componsante -->
+    <bean id="composanteDao" class="fr.GalileeGFormation.dao.ComposanteDaoImpl" init-method="init"/>
+    <bean id="composanteMetier" class="fr.GalileeGFormation.service.ComposanteMetierImpl" init-method="init">
+        <property name="composanteDao" ref="composanteDao"/>
+    </bean>
+    
+    <!-- Secretariat -->
+    <bean id="secretariatDao" class="fr.GalileeGFormation.dao.SecretariatDaoImpl" init-method="init"/>
+    <bean id="secretariatMetier" class="fr.GalileeGFormation.service.SecretariatMetierImpl" init-method="init">
+        <property name="secretariatDao" ref="secretariatDao"/>
+    </bean>
+    
+    <!-- Departement-->
+    <bean id="departementDao" class="fr.GalileeGFormation.dao.DepartementDaoImpl"/>
+    <bean id="departementMetier" class="fr.GalileeGFormation.service.DepartementMetierImpl">
+        <property name="departementDao" ref="departementDao"/>
+    </bean>
+    
+    <!-- SuperFormation -->
+    <bean id="superFormationDao" class="fr.GalileeGFormation.dao.SuperFormationDaoImpl"/>
+    <bean id="superFormationMetier" class="fr.GalileeGFormation.service.SuperFormationMetierImpl">
+        <property name="superFormationDao" ref="superFormationDao"/>
+    </bean>
+    
+    <!-- Formation -->
+    <bean id="formationDao" class="fr.GalileeGFormation.dao.FormationDaoImpl"/>
+    <bean id="formationMetier" class="fr.GalileeGFormation.service.FormationMetierImpl">
+        <property name="formationDao" ref="formationDao"/> 
+    </bean>
+    
+    <!-- Cours -->
+    <bean id="coursDao" class="fr.GalileeGFormation.dao.CoursDaoImpl"/>
+    <bean id="coursMetier" class="fr.GalileeGFormation.service.CoursMetierImpl">
+        <property name="coursDao" ref="coursDao"/>
+    </bean>
+
+    <bean id="usersDao" class="fr.GalileeGFormation.dao.UsersDaoImpl" init-method="init"/>
+    <bean id="usersMetier" class="fr.GalileeGFormation.service.UsersMetierImpl">
+        <property name="usersDao" ref="usersDao"/>
+    </bean>
+    
+    <bean id="controlDao" class="fr.GalileeGFormation.dao.ControlDaoImpl" init-method="init"/>
+    <bean id="controlMetier" class="fr.GalileeGFormation.service.ControlMetierImpl">
+        <property name="controlDao" ref="controlDao"/>
+    </bean>
+
+        
+
+
+    <context:annotation-config/>
+
+    
+</beans>
