@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 9 mars 2016 21:41:43 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="fr.GalileeGFormation.entites.Users" table="users" catalog="formation_db" optimistic-lock="version">
+        <id name="username" type="string">
+            <column name="username" length="45" />
+            <generator class="assigned" />
+        </id>
+        <property name="password" type="string">
+            <column name="password" length="60" not-null="true" />
+        </property>
+        <property name="enabled" type="boolean">
+            <column name="enabled" not-null="true" />
+        </property>
+        <property name="firstName" type="string">
+            <column name="first_name" length="70" />
+        </property>
+        <property name="lastName" type="string">
+            <column name="last_name" length="45" />
+        </property>
+        <property name="telephone" type="string">
+            <column name="telephone" length="45" />
+        </property>
+        <property name="email" type="string">
+            <column name="email" length="75" />
+        </property>
+        <property name="status" type="string">
+            <column name="status" length="45" />
+        </property>
+        <set name="courses" table="cours" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="username" length="45" not-null="true" />
+            </key>
+            <one-to-many class="fr.GalileeGFormation.entites.Cours" />
+        </set>
+        <set name="composantes" table="composante" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="username" length="45" not-null="true" />
+            </key>
+            <one-to-many class="fr.GalileeGFormation.entites.Composante" />
+        </set>
+        <set name="roles" table="role" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="username" length="45" not-null="true" />
+            </key>
+            <one-to-many class="fr.GalileeGFormation.entites.Role" />
+        </set>
+        <set name="universites" table="universite" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="username" length="45" not-null="true" />
+            </key>
+            <one-to-many class="fr.GalileeGFormation.entites.Universite" />
+        </set>
+        <set name="formations" table="formation" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="username" length="45" not-null="true" />
+            </key>
+            <one-to-many class="fr.GalileeGFormation.entites.Formation" />
+        </set>
+        <set name="superFormations" table="super_formation" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="username" length="45" not-null="true" />
+            </key>
+            <one-to-many class="fr.GalileeGFormation.entites.SuperFormation" />
+        </set>
+        <set name="departements" table="departement" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="username" length="45" not-null="true" />
+            </key>
+            <one-to-many class="fr.GalileeGFormation.entites.Departement" />
+        </set>
+    </class>
+</hibernate-mapping>
